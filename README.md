@@ -1,4 +1,3 @@
-<include a CircleCI status badge, here>
 [![>>](https://circleci.com/gh/khairahscorner/UdacityMicroservicesProject.svg?style=svg)](https://app.circleci.com/pipelines/github/khairahscorner/UdacityMicroservicesProject)
 
 
