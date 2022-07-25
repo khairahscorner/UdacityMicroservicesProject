@@ -1,4 +1,6 @@
 <include a CircleCI status badge, here>
+[![>>](https://circleci.com/gh/khairahscorner/UdacityMicroservicesProject.svg?style=svg)](https://app.circleci.com/pipelines/github/khairahscorner/UdacityMicroservicesProject)
+
 
 # Udacity Cloud DevOps Engineer Nanodegree Project 3
 My repo for the fourth nanodegree project - Operationalize a Machine Learning Microservice API.
