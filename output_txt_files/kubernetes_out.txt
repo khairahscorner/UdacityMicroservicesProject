@@ -1,1 +1,20 @@
-<paste log output from Kubernetes-mediated prediction, here>
+NAME       STATUS   ROLES           AGE     VERSION
+minikube   Ready    control-plane   2m47s   v1.24.1
+deployment.apps/project4 created
+service/project4 exposed
+NAME                       READY   STATUS              RESTARTS   AGE
+project4-f745c7768-jv9fk   0/1     ContainerCreating   0          0s
+Name of the Pod: project4-f745c7768-jv9fk
+error: unable to forward port because pod is not running. Current status=Pending
+(.devops) voclabs:~/environment/UdacityMicroservicesProject (master) $ ./run_kubernetes.sh                                              
+NAME       STATUS   ROLES           AGE     VERSION
+minikube   Ready    control-plane   3m25s   v1.24.1
+error: failed to create deployment: deployments.apps "project4" already exists
+Error from server (AlreadyExists): services "project4" already exists
+NAME                       READY   STATUS    RESTARTS   AGE
+project4-f745c7768-jv9fk   1/1     Running   0          39s
+Name of the Pod: project4-f745c7768-jv9fk
+Forwarding from 0.0.0.0:8000 -> 80
+Handling connection for 8000
+Handling connection for 8000
+Handling connection for 8000

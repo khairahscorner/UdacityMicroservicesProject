@@ -4,7 +4,7 @@
 
 # Step 1:
 # Build image and add a descriptive tag
-docker build -t project4/ml_api .
+docker build -t project4/v1.2 .
 
 # Step 2: 
 # List docker images
@@ -12,4 +12,4 @@ docker images
 
 # Step 3: 
 # Run flask app
-docker run -p 8000:80 project4/ml_api
+docker run -p 8000:80 project4/v1.2

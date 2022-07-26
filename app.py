@@ -1,5 +1,4 @@
-# from flask import Flask, request, jsonify, render_template
-from flask import Flask, request, render_template
+from flask import Flask, request, jsonify, render_template
 from flask.logging import create_logger
 import logging
 
@@ -24,7 +23,7 @@ def scale(payload):
 def home():
     return render_template('form.html')
 
-@app.route("/predict", methods=['POST', 'GET'])
+@app.route("/predict", methods=['POST'])
 def predict():
     """Performs an sklearn prediction
         
@@ -53,44 +52,52 @@ def predict():
         { "prediction": [ <val> ] }
         
         """
+    
+    # Logging the input payload
+    json_payload = request.json
+    LOG.info(f"JSON payload: \n{json_payload}")
+    inference_payload = pd.DataFrame(json_payload)
+    LOG.info(f"Inference payload DataFrame: \n{inference_payload}")
+    
+    # scale the input
+    scaled_payload = scale(inference_payload)
+    
+    # get an output prediction from the pretrained model, clf
+    prediction = list(clf.predict(scaled_payload))
+    
+    # TO DO:  Log the output prediction value
+    LOG.info(f"Predicted Value: \n{prediction}")
+    return jsonify({'prediction': prediction})
+
+@app.route("/results", methods=['POST', 'GET'])
+def results():
     if request.method == 'GET':
         return "The URL is directly inaccessible. Go to '/' to submit a form first"
     if request.method == 'POST':
-        firstInput = request.form.get('PTRATIO')
-        secondInput = request.form.get('TAX')
-        otherInput = request.form.get('OTHERS')
+        userInput = request.form.get('randomNum')
         
         # Set custom payload
         json_payload = {
         "CHAS":{
-        "0":0
+        "0":float(userInput)
         },
         "RM":{
-        "0":6.575
+        "0":float(userInput)*14
         },
         "TAX":{
-        "0":296.0
+        "0":float(userInput)
         },
         "PTRATIO":{
-        "0":15.3
+        "0":float(userInput)
         },
         "B":{
-        "0":396.9
+        "0":float(userInput)
         },
         "LSTAT":{
-        "0":4.98
+        "0":float(userInput)*5
         }}
-        LOG.info(f"first JSON payload: \n{json_payload}")
 
-        # modify values 
-        json_payload['CHAS']["0"] = (json_payload['CHAS']["0"])*float(otherInput)
-        json_payload['RM']["0"] = (json_payload['RM']["0"])*float(otherInput)
-        json_payload['B']["0"] = (json_payload['B']["0"])*float(otherInput)
-        json_payload['LSTAT']["0"] = (json_payload['LSTAT']["0"])*float(otherInput)
-        json_payload['PTRATIO']["0"] = (json_payload['PTRATIO']["0"])*float(firstInput)
-        json_payload['TAX']["0"] = (json_payload['TAX']["0"])*float(secondInput)
-
-        LOG.info(f"modified JSON payload: \n{json_payload}")
+        LOG.info(f"JSON payload: \n{json_payload}")
         inference_payload = pd.DataFrame(json_payload)
         LOG.info(f"Inference payload DataFrame: \n{inference_payload}")
 
@@ -99,10 +106,6 @@ def predict():
         
         # get an output prediction from the pretrained model, clf
         prediction = list(clf.predict(scaled_payload))
-
-        # TO DO:  Log the output prediction value
-        LOG.info(f"Predicted Value: \n{prediction}")
-        # return jsonify({'prediction': prediction})
 
         # show result in html 
         return render_template('data.html',prediction = prediction)

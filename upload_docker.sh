@@ -11,8 +11,8 @@ dockerpath=khairahscorner/project4
 # Authenticate & tag
 echo "Docker ID and Image: $dockerpath"
 docker login
-docker image tag project4/ml_api $dockerpath:ml_api
+docker image tag project4/v1.2 $dockerpath:v1.2
 
 # Step 3:
 # Push image to a docker repository
-docker image push $dockerpath:ml_api
+docker image push $dockerpath:v1.2
