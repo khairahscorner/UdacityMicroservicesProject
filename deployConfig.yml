@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: udacity-api
+spec:
+  replicas: 1 #defines the number of pods to deploy with the image. can be scaled using kubectl scale deployment [name] --replicas [num]
+  selector:
+    matchLabels:
+      app: udacity-api
+  template:
+    metadata:
+      labels:
+        app: udacity-api #label the pods so you can target them when creating a service
+    spec:
+      containers:
+      - name: udacity-api
+        image: khairahscorner/project4:port3030
